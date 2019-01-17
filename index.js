@@ -1,18 +1,18 @@
-module.exports.add = function(a,b){
-    return console.log("Summ",a+b);
-}
+const express = require('express');
+const logger = require('./middleware/logger');
+const genres = require('./routes/genres')
+const courses = require('./routes/courses')
+const app = express();
 
-const http = require('http');
+app.use('/api/genres',genres);
+app.use('/api/courses',courses);
+app.use(express.json());
+app.use(express.static('./'));
+app.use(logger);
 
-const server = http.createServer((req,res)=>{
-    if(req.url=='/'){
-        res.write("Hello Man");
-        res.end();
-    }
-    if(req.url=='/course'){
-        res.write(JSON.stringify([1,2,3]));
-        res.end();
-    }
-})
-server.listen(3001);
-console.log("Listening port 3001");
+app.set('view engine','pug');
+app.set('views','./views'); // default
+
+const port = process.env.port || 3001
+app.listen(port,()=>console.log(`Listening to the port ${port} ..`));
+
