@@ -79,6 +79,11 @@ async function getCourse() {
     console.log(course);
 }
 
+async function deleteDoc(id){ 
+    const result = await courses.deleteOne({_id:id}); 
+    console.log(result)}
+//    deleteDoc("5a68fdc3615eda645bc6bdec");  
+
 async function updateCourse(id) {
     const course = await Course.findById(id);
     if (!course) console.log("Invalid id")
@@ -87,3 +92,4 @@ async function updateCourse(id) {
     console.log(result);
 }
 updateCourse('5c2c4f30bf65edcb08d4a68d');
+

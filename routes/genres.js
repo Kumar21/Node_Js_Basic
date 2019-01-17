@@ -31,7 +31,7 @@ router.put('/:id',(req,res)=>{
     const movie= movies.find(c=>c.id === parseInt(req.params.id))
     if(!movie) return res.status(404).send("id not found");
     const schema={
-        name:Joi.string().min(3).required()
+        name:Joi.string().  (3).required()
     };
     const result = Joi.validate(req.body,schema);
     if(result.error) return res.status(404).send(result.error.details[0].message);
