@@ -1,4 +1,4 @@
-const {User, validate} = require('./user');
+const {User, validate} = require('./uservalidate');
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();

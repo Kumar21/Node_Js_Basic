@@ -26,7 +26,7 @@ async function createCourse() {
     }
 }
 
-createCourse();
+//createCourse();
 
 router.post('/',async(req,res)=>{
    try{ const valid = validate(req.body);
@@ -42,4 +42,4 @@ router.post('/',async(req,res)=>{
         res.send(result);
     }catch(err){console.log(err);}
 })
-module.exports=router;
+module.exports = router;

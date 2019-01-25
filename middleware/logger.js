@@ -8,6 +8,6 @@ function log2(msg){
 function log3(msg){
     return console.log("hi log3 "+msg);
 }
-module.exports = log;
-module.exports = log2;
-module.exports = log3;
+exports.log = log;
+exports.log2 = log2;
+exports.log3 = log3;
