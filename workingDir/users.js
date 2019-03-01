@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
 router.use(express.json());
-mongoose.connect('mongodb://localhost/newTest',{ useNewUrlParser: true })
+/* mongoose.connect('mongodb://localhost/newTest',{ useNewUrlParser: true })
   .then(() => console.log('Connected to MongoDB...'))
   .catch(err => console.error('Could not connect to MongoDB...'));
-
+ */
 router.get('/',async (req, res) => {
   const user = await User.find().sort('name');
   res.send(user);

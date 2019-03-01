@@ -1,45 +1,57 @@
+const {Customer, validate} = require('../models/customer'); 
+const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
-const mongoose = require('mongoose');
-const {validate,customers} = require('./customerValidate')
-mongoose.connect('mongodb://localhost/customers',{useNewUrlParser : true})
-    .then(()=>console.log(" Connecting to DB.."))
-    .catch((error)=> console.log(" Error Occured", error));
 
-router.get('/',async(req,res)=>{
-    const customer = await customers.find().sort('name');
-    res.send(customer);
-})
+router.get('/', async (req, res) => {
+  const customers = await Customer.find().sort('name');
+  res.send(customers);
+});
 
+router.post('/', async (req, res) => {
+  const { error } = validate(req.body); 
+  if (error) return res.status(400).send(error.details[0].message);
 
-async function createCourse() {
-    const course = new customers({
-        name: 'Kumar25',
-        phone: 7688858813,
-        isGold: true
-    });
-    try{const result = await course.save();
-    console.log(result);}
-    catch(err){
-        for(field in err.errors)  // validation message
-        console.log(err.errors[field].message);
-    }
-}
+  let customer = new Customer({ 
+    name: req.body.name,
+    isGold: req.body.isGold,
+    phone: req.body.phone
+  });
+  customer = await customer.save();
+  
+  res.send(customer);
+});
 
-//createCourse();
+router.put('/:id', async (req, res) => {
+  const { error } = validate(req.body); 
+  if (error) return res.status(400).send(error.details[0].message);
 
-router.post('/',async(req,res)=>{
-   try{ const valid = validate(req.body);
-    if(!valid) return res.status(404).send(valid.error.details[0].message);
-    const customer = new customers({
-        name: req.body.name,
-        phone: req.body.phone,
-        isGold: req.body.isGold
-    });
-    
-        const result = await customer.save();
-        console.log(result);
-        res.send(result);
-    }catch(err){console.log(err);}
-})
-module.exports = router;
+  const customer = await Customer.findByIdAndUpdate(req.params.id,
+    { 
+      name: req.body.name,
+      isGold: req.body.isGold,
+      phone: req.body.phone
+    }, { new: true });
+
+  if (!customer) return res.status(404).send('The customer with the given ID was not found.');
+  
+  res.send(customer);
+});
+
+router.delete('/:id', async (req, res) => {
+  const customer = await Customer.findByIdAndRemove(req.params.id);
+
+  if (!customer) return res.status(404).send('The customer with the given ID was not found.');
+
+  res.send(customer);
+});
+
+router.get('/:id', async (req, res) => {
+  const customer = await Customer.findById(req.params.id);
+
+  if (!customer) return res.status(404).send('The customer with the given ID was not found.');
+
+  res.send(customer);
+});
+
+module.exports = router; 

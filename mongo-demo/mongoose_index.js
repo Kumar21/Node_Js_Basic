@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
-mongoose.connect('mongodb://localhost/playground', { useNewUrlParser: true })
+/* mongoose.connect('mongodb://localhost/playground', { useNewUrlParser: true })
     .then(() => console.log('Connecting to db...'))
     .catch(err => console.error("Error occured", err));
-
+ */
 const courseSchema = new mongoose.Schema({
     name:
     {   // built in validators

@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/mongo-exercises',{ useNewUrlParser: true })
+/* mongoose.connect('mongodb://localhost/mongo-exercises',{ useNewUrlParser: true })
     .then(()=>console.log('Connecting to db..'))
     .catch(err=>console.log('Error occured',err))
-
+ */
 const Schema = new mongoose.Schema({
     tags:[String],
     date:{type:Date,default:Date.now},
