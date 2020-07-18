@@ -11,6 +11,13 @@ router.get('/',async (req, res) => {
   const user = await User.find().sort('name');
   res.send(user);
 });
+/* var options = { method: 'GET',url: 'https://github.com/qmetry/qaf-blank-project/archive/master.zip'};
+	request(options, function (error, response, body) {
+	  if (error) {throw new Error(error);}
+	  let file = fs.createWriteStream(path.join(__dirname+"/master.zip"));
+	  response.pipe(file);
+	  console.log("response"+response.status);
+	}); */
 router.post('/', async (req, res) => {
   const { error } = validate(req.body); 
   if (error) return res.status(400).send(error.details[0].message);
